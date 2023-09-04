@@ -1,0 +1,37 @@
+---
+import Image from 'astro/components/Image.astro';
+const { url } = Astro.props;
+const response = await fetch(url);
+const pokemon = await response.json();
+---
+
+<a href={`mains/${pokemon.id}`} class={`pokemon-card ${pokemon.types[0].type.name} relative`}>
+	<div class='flex flex-col gap-2 h-full'>
+		<h3 class='text-2xl capitalize font-bold'>{pokemon.name}</h3>
+		<div class='flex flex-col gap-2'>
+			{
+				pokemon.types.map((type, index) => (
+					<span
+						class={`rounded-full px-2 py-1 text-sm font-semibold w-20 text-center ${
+							index > 0 ? `${type.type.name} bg-opacity-80` : 'bg-zinc-100/40 '
+						}  `}
+					>
+						{type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+					</span>
+				))
+			}
+		</div>
+	</div>
+
+	<div class='flex flex-col items-center'>
+		<Image
+			class='w-36 h-36 object-contain z-[1]'
+			src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+			alt={pokemon.name}
+			width={144}
+			height={144}
+		/>
+	</div>
+	<div class='bg-pokeball'></div>
+	<p class='absolute top-[5%] right-[5%] text-3xl text-zinc-50/60'># {pokemon.id}</p>
+</a>
