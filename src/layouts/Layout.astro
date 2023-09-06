@@ -1,14 +1,14 @@
 ---
-import '../styles/global.css';
-import Footer from '../components/Footer.astro';
+import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
-const { title } = Astro.props;
-export const prerender = true;
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 
+const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang='es'>
+<html lang='en'>
 	<head>
 		<meta charset='UTF-8' />
 		<meta name='description' content='Astro description' />
@@ -16,10 +16,30 @@ export const prerender = true;
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<meta name='generator' content={Astro.generator} />
 		<title>{title}</title>
+		<ViewTransitions fallback='none' />
 	</head>
 	<body class='relative bg-zinc-200 text-zinc-900 dark:bg-slate-900 dark:text-zinc-100'>
 		<Header />
-		<slot />
+		<slot transition:animate='slide' />
 		<Footer />
+		<script>
+			const themeToggles = document.querySelectorAll('[data-theme-toggle]');
+
+			const getTheme = () => localStorage.getItem('theme') || 'light';
+
+			const setTheme = (theme) => document.documentElement.setAttribute('data-theme', theme);
+
+			window.addEventListener('DOMContentLoaded', () => setTheme(getTheme()));
+			document.addEventListener('astro:after-swap', () => setTheme(getTheme()));
+
+			themeToggles.forEach((toggle) => {
+				toggle.addEventListener('click', () => {
+					console.log('acá');
+					const nextTheme = getTheme() === 'light' ? 'dark' : 'light';
+					localStorage.setItem('theme', nextTheme);
+					setTheme(nextTheme);
+				});
+			});
+		</script>
 	</body>
 </html>
