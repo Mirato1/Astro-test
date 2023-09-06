@@ -15,6 +15,6 @@ export default defineConfig({
 		service: squooshImageService(),
 		domains: ['astro.build', 'https://raw.githubusercontent.com/'],
 	},
-	output: 'server',
+	output: 'hybrid',
 	adapter: vercel(),
 });
