@@ -15,14 +15,14 @@ function capitalizeString(str) {
 		<h1 class='text-4xl font-bold mb-4'>{capitalizeString(pokemonData.name)}</h1>
 		<div
 			class={`${pokemonData.types[0].type.name} relative flex flex-col md:flex-row flex-1 p-4 rounded-xl shadow-xl w-full`}
-			transition:name=`playlist ${pokemonData.id} box`
+			transition:name=`pokemon ${pokemonData.id} box`
 		>
 			<div class='flex-1'>
 				<img
 					class='w-96 h-96 object-contain z-[1]'
 					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonData.id}.png`}
 					alt={pokemonData.name}
-					transition:name=`playlist ${pokemonData.id} image`
+					transition:name=`pokemon ${pokemonData.id} image`
 				/>
 			</div>
 			<div class='flex-1'>
